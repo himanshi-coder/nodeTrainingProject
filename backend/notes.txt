@@ -1,0 +1,41 @@
+// dependencies explaination --
+
+    "dependencies": {
+        "bcrypt": "^5.1.1",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.21.1",
+        "jsonwebtoken": "^9.0.2",
+        "nodemon": "^3.1.7",
+        "pg": "^8.13.1", // PostgreSQL client for Node.js.
+        "pg-hstore": "^2.3.4", // Serializer for handling PostgreSQL's JSON data type
+        "sequelize": "^6.37.5" // Sequelize library
+    }
+
+
+// we will get logs like this in the console
+
+    Executing (default): SELECT 1+1 AS result
+
+    Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'Users'
+    PostgreSQL database connected!
+    
+    Executing (default): SELECT t.typname enum_name, array_agg(e.enumlabel ORDER BY enumsortorder) enum_value FROM pg_type t JOIN pg_enum e ON t.oid = e.enumtypid JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace WHERE n.nspname = 'public' AND t.typname='enum_Users_status' GROUP BY 1
+    Executing (default): DO 'BEGIN CREATE TYPE "public"."enum_Users_status" AS ENUM(''0'', ''1''); EXCEPTION WHEN duplicate_object THEN null; END';
+    Executing (default): WITH ranges AS (  SELECT pg_range.rngtypid, pg_type.typname AS rngtypname,         pg_type.typarray AS rngtyparray, pg_range.rngsubtype    FROM pg_range LEFT OUTER JOIN pg_type ON pg_type.oid = pg_range.rngtypid)SELECT pg_type.typname, pg_type.typtype, pg_type.oid, pg_type.typarray,       ranges.rngtypname, ranges.rngtypid, ranges.rngtyparray  FROM pg_type LEFT OUTER JOIN ranges ON pg_type.oid = ranges.rngsubtype WHERE (pg_type.typtype IN('b', 'e'));
+    Executing (default): CREATE TABLE IF NOT EXISTS "Users" ("id" UUID , "first_name" VARCHAR(255), "last_name" VARCHAR(255), "user_name" VARCHAR(255), "email" VARCHAR(255), "phone" VARCHAR(255), "role" VARCHAR(255), "password" VARCHAR(255), "access_token" VARCHAR(255), "remember_me" BOOLEAN, "status" "public"."enum_Users_status", "reset_password_token" VARCHAR(255), "created_at" TIMESTAMP WITH TIME ZONE, "updated_at" TIMESTAMP WITH TIME ZONE, "deleted_at" TIMESTAMP WITH TIME ZONE, PRIMARY KEY ("id"));
+    Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'Users' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;
+    Database synced!
+
+    // console logs meaning
+        Database Connection Test
+        Executing (default): SELECT 1+1 AS result
+        PostgreSQL database connected!
+            What happened?: Sequelize tested the connection to the PostgreSQL database by running a simple query (SELECT 1+1 AS result).
+            Outcome: The connection was successful, and the message PostgreSQL database connected! confirms it.
+            
+        Checking Table Existence
+        Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'Users'
+            What happened?: Sequelize checked if the table Users exists in the public schema of your database.
+            Why?: When using Sequelize models, it verifies the existence of tables to determine if they need to be created or modified.

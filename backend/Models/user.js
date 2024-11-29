@@ -7,8 +7,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate() {
+    static associate(models) {
       // define association here
+      // User has many Properties
+      User.hasMany(models.Property, {
+        foreignKey: 'owner_id',
+        // otherKey: 'property_id',
+        as: 'properties',
+      });
     }
   }
   User.init(
@@ -22,9 +28,17 @@ module.exports = (sequelize, DataTypes) => {
       last_name: DataTypes.STRING,
       // user_name: DataTypes.STRING,
       email: DataTypes.STRING,
-      phone: DataTypes.STRING,
+      phone: {
+        type: DataTypes.STRING, // Store OTP as a string
+        allowNull: true, // Allow null initially
+      },
       role: DataTypes.STRING,
       password: DataTypes.STRING,
+      otp: {
+        type: DataTypes.STRING, // Store OTP as a string
+        allowNull: true, // Allow null initially
+      },
+      isVerified: DataTypes.ENUM('0', '1'),
       // access_token: DataTypes.STRING,
       // remember_me: DataTypes.BOOLEAN,
       status: DataTypes.ENUM('0', '1'),

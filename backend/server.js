@@ -3,7 +3,8 @@ const sequelize = require("sequelize"); // sequelize: An ORM (Object Relational 
 const dotenv = require("dotenv").config(); // dotenv: A library that loads environment variables from a .env file into process.env. Useful for managing sensitive data like API keys, database credentials, and configuration variables.
 const cors = require("cors"); //(Cross-Origin Resource Sharing) To make your API accessible in Chrome, you need to allow CORS. CORS is a mechanism that controls which domains are allowed to access your server. By default, browsers block requests made from a different origin (domain, protocol, or port). Browsers enforce CORS for security reasons, but Postman bypasses it because it's designed for API testing.
 const db = require('./Models'); // Import Sequelize models
-const userRoutes = require ('./Routes/userRoutes')
+const authRoutes = require ('./Routes/authRoutes')
+const propertyRoutes = require ('./Routes/propertyRoutes')
 
 //#region setting up port
 // const PORT = process.env.port || 5000;
@@ -34,7 +35,8 @@ db.sequelize.sync({ alter: true }) // Adjust schema without dropping tables
 
 //routes 
 
-app.use('/api/users', userRoutes) //for the user API
+app.use('/api/auth', authRoutes) //for the user API
+app.use('/api', propertyRoutes); // Use the property routes
 app.use('/', (req, res) => {
     return res.send('Hi from server');
 });

@@ -10,7 +10,9 @@
         "nodemon": "^3.1.7",
         "pg": "^8.13.1", // PostgreSQL client for Node.js.
         "pg-hstore": "^2.3.4", // Serializer for handling PostgreSQL's JSON data type
-        "sequelize": "^6.37.5" // Sequelize library
+        "sequelize": "^6.37.5" // Sequelize library,
+        "nodemailer": "^6.9.16", // allows you to send emails
+        "crypto": "^1.0.1", // for generating OTPs
     }
 
 
@@ -20,7 +22,7 @@
 
     Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'Users'
     PostgreSQL database connected!
-    
+
     Executing (default): SELECT t.typname enum_name, array_agg(e.enumlabel ORDER BY enumsortorder) enum_value FROM pg_type t JOIN pg_enum e ON t.oid = e.enumtypid JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace WHERE n.nspname = 'public' AND t.typname='enum_Users_status' GROUP BY 1
     Executing (default): DO 'BEGIN CREATE TYPE "public"."enum_Users_status" AS ENUM(''0'', ''1''); EXCEPTION WHEN duplicate_object THEN null; END';
     Executing (default): WITH ranges AS (  SELECT pg_range.rngtypid, pg_type.typname AS rngtypname,         pg_type.typarray AS rngtyparray, pg_range.rngsubtype    FROM pg_range LEFT OUTER JOIN pg_type ON pg_type.oid = pg_range.rngtypid)SELECT pg_type.typname, pg_type.typtype, pg_type.oid, pg_type.typarray,       ranges.rngtypname, ranges.rngtypid, ranges.rngtyparray  FROM pg_type LEFT OUTER JOIN ranges ON pg_type.oid = ranges.rngsubtype WHERE (pg_type.typtype IN('b', 'e'));
@@ -39,3 +41,358 @@
         Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'Users'
             What happened?: Sequelize checked if the table Users exists in the public schema of your database.
             Why?: When using Sequelize models, it verifies the existence of tables to determine if they need to be created or modified.
+
+what is node.js ?
+    - node.js is an open source, server environment, which is event driven. it runs on single thread, non-blocking, asynchronous programming which is very memory efficient.
+
+Api's ?
+    - API - Application programming interface. it consists of various communication protocols
+
+Sequelize ?
+    - sequelize is a promise based node.js ORM tool. it is a modern typescript and node.js ORM for postgres, mysql, mariaDB, SQLite and SQL server. 
+
+ORM (Object Relational Mapping) ?
+    - ORM is a technique to accessing a relational database from an object-oriented language 
+    - toll that maps software to database tables.
+
+
+====================================================================
+    sequelize (ORM) notes -
+        Modal Basics - 
+            - Modal represents a database table. we can define columns and there type into Modal. Usually modals have singular names (such as User) while tables have pluralized names (such as Users).
+            - Modals can be defined in two ways in sequelize.
+                - Calling - sequelize.define(modalName, attributes, options)
+                - Extending Modal and calling - init(attributes, options)
+        
+                    1. Using sequelize.define
+                        This method defines a model without extending the Sequelize Model class.
+                        ----------------
+                        const { Sequelize, DataTypes } = require('sequelize');
+                        const sequelize = new Sequelize('database', 'username', 'password', {
+                        host: 'localhost',
+                        dialect: 'mysql', // or 'postgres', 'sqlite', 'mssql'
+                        });
+
+                        const User = sequelize.define(
+                        'User', // Model name
+                        {
+                            // Attributes (columns)
+                            id: {
+                            type: DataTypes.INTEGER,
+                            autoIncrement: true,
+                            primaryKey: true,
+                            },
+                            name: {
+                            type: DataTypes.STRING,
+                            allowNull: false,
+                            },
+                            email: {
+                            type: DataTypes.STRING,
+                            unique: true,
+                            allowNull: false,
+                            },
+                            password: {
+                            type: DataTypes.STRING,
+                            allowNull: false,
+                            },
+                        },
+                        {
+                            // Options
+                            tableName: 'users', // Explicit table name if different from model name
+                            timestamps: true, // Adds createdAt and updatedAt fields, it can be false as well 
+                        }
+                        );
+
+                        module.exports = User;
+
+                    2. Extending the Model Class and Using init
+                        This method involves extending Sequelize's Model class and calling init to define the model.
+                        --------------------
+                        const { Sequelize, DataTypes, Model } = require('sequelize');
+                        const sequelize = new Sequelize('database', 'username', 'password', {
+                        host: 'localhost',
+                        dialect: 'mysql', // or 'postgres', 'sqlite', 'mssql'
+                        });
+
+                        class User extends Model {}
+
+                        User.init(
+                        {
+                            // Attributes (columns)
+                            id: {
+                            type: DataTypes.INTEGER,
+                            autoIncrement: true,
+                            primaryKey: true,
+                            },
+                            name: {
+                            type: DataTypes.STRING,
+                            allowNull: false,
+                            },
+                            email: {
+                            type: DataTypes.STRING,
+                            unique: true,
+                            allowNull: false,
+                            },
+                            password: {
+                            type: DataTypes.STRING,
+                            allowNull: false,
+                            },
+                        },
+                        {
+                            // Options
+                            sequelize, // Pass the Sequelize instance
+                            modelName: 'User', // Model name
+                            tableName: 'users', // Explicit table name
+                            timestamps: true, // Adds createdAt and updatedAt fields, it can be false as well 
+                        }
+                        );
+
+                        module.exports = User;
+        ====================================================================
+        Table synchronization
+                - sync only one table (modal)
+                    - User.sync() - This creates table if does not exist
+                    - User.sync({force: true}) - This deletes table first and then creates the table, table will be re-created
+                    - User.sync({alter: true}) - It performs the necessary changes in the table to make it match to the Modal, // Adjust schema without dropping tables
+
+                - sync all modals at once
+                    - sequelize.sync({force: true}) - all modals will be synchronize at once
+
+                - during sync logs like these will be printed
+                    // we will get logs like this in the console 
+
+                        Executing (default): SELECT 1+1 AS result
+
+                        Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'Users'
+                        PostgreSQL database connected!
+
+                        Executing (default): SELECT t.typname enum_name, array_agg(e.enumlabel ORDER BY enumsortorder) enum_value FROM pg_type t JOIN pg_enum e ON t.oid = e.enumtypid JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace WHERE n.nspname = 'public' AND t.typname='enum_Users_status' GROUP BY 1
+                        Executing (default): DO 'BEGIN CREATE TYPE "public"."enum_Users_status" AS ENUM(''0'', ''1''); EXCEPTION WHEN duplicate_object THEN null; END';
+                        Executing (default): WITH ranges AS (  SELECT pg_range.rngtypid, pg_type.typname AS rngtypname,         pg_type.typarray AS rngtyparray, pg_range.rngsubtype    FROM pg_range LEFT OUTER JOIN pg_type ON pg_type.oid = pg_range.rngtypid)SELECT pg_type.typname, pg_type.typtype, pg_type.oid, pg_type.typarray,       ranges.rngtypname, ranges.rngtypid, ranges.rngtyparray  FROM pg_type LEFT OUTER JOIN ranges ON pg_type.oid = ranges.rngsubtype WHERE (pg_type.typtype IN('b', 'e'));
+                        Executing (default): CREATE TABLE IF NOT EXISTS "Users" ("id" UUID , "first_name" VARCHAR(255), "last_name" VARCHAR(255), "user_name" VARCHAR(255), "email" VARCHAR(255), "phone" VARCHAR(255), "role" VARCHAR(255), "password" VARCHAR(255), "access_token" VARCHAR(255), "remember_me" BOOLEAN, "status" "public"."enum_Users_status", "reset_password_token" VARCHAR(255), "created_at" TIMESTAMP WITH TIME ZONE, "updated_at" TIMESTAMP WITH TIME ZONE, "deleted_at" TIMESTAMP WITH TIME ZONE, PRIMARY KEY ("id"));
+                        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'Users' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;
+                        Database synced!
+
+                    // console logs meaning
+                        Database Connection Test
+                        Executing (default): SELECT 1+1 AS result
+                        PostgreSQL database connected!
+                            What happened?: Sequelize tested the connection to the PostgreSQL database by running a simple query (SELECT 1+1 AS result).
+                            Outcome: The connection was successful, and the message PostgreSQL database connected! confirms it.
+                            
+                        Checking Table Existence
+                        Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'Users'
+                            What happened?: Sequelize checked if the table Users exists in the public schema of your database.
+                            Why?: When using Sequelize models, it verifies the existence of tables to determine if they need to be created or modified.
+
+                
+                - Delete one table
+                    - User.drop() // this will delete User table
+
+                - Delete all the tables in the database
+                    - sequelize.drop() // All tables deleted
+        ====================================================================
+        Table joins and associations - 
+                we have three types of associations  (one-to-one, one-to-many, many-to-many) and to achieve these we have 4 methods (HasOne, BelongsTo, HasMany, BelongsToMany)
+                - to create any association we need two things - in the related tables, those we want to join -       
+                    // in the table we want data 
+                    category_id: {
+                        type: DataTypes.UUID,
+                        allowNull: false,
+                    },
+                - one-to-one association (one contact can be associated with one user)
+                    // for this we will use  HasOne and BelongsTo
+                        - HasOne association - one user have one contact (one contact can be associated with one user) - Specifies that one record (ex. User_id) in Contact can have one related record in User.
+                        - BelongsTo association
+                        use of the methods-  // Associations // This adds a `userId` foreign key in the `Contact` table.
+                                User.hasOne(Contact, { foreignKey: 'userId' }); // User has one Contact
+                                Contact.belongsTo(User, { foreignKey: 'userId' }); // Contact belongs to one User
+                                
+                - one-to-many association (one user can be associated with multiple contacts) 
+                    // for this we will use HasMany and BelongsTo associations
+                - many-to-many association 
+                    // for this we will use BelongsToMany association
+
+
+                // examples for all the relationships 
+
+                    In Sequelize, you can create different types of joins based on the relationships between the models: one-to-one, one-to-many, and many-to-many. Let’s go over how to define these associations and use them in queries.
+
+                    1. One-to-One Relationship
+                        A one-to-one relationship means that a single record in one table is associated with a single record in another table. For example, a User might have a Profile, where each User has exactly one Profile, and vice versa.
+
+                        => Model Setup:
+
+                            // User Model
+                            User.hasOne(Profile, {
+                                foreignKey: 'user_id',
+                                as: 'profile', // Alias for easy reference
+                            });
+
+                            // Profile Model
+                            Profile.belongsTo(User, {
+                                foreignKey: 'user_id',
+                                as: 'user', // Alias for easy reference
+                            });
+                            
+                        => Fetching Data:
+                            - Fetch a User with its Profile:
+
+                                const userWithProfile = await User.findOne({
+                                    where: { id: 'some-user-id' },
+                                    include: [
+                                        {
+                                        model: Profile,
+                                        as: 'profile', // Alias defined in association
+                                        attributes: ['bio', 'avatar'],
+                                        },
+                                    ],
+                                });
+
+                                console.log(userWithProfile);
+                            
+                            - Fetch a Profile with its User:
+
+                                const profileWithUser = await Profile.findOne({
+                                    where: { profile_id: 'some-profile-id' },
+                                    include: [
+                                        {
+                                        model: User,
+                                        as: 'user', // Alias defined in association
+                                        attributes: ['first_name', 'last_name'],
+                                        },
+                                    ],
+                                });
+
+                                console.log(profileWithUser);
+
+                    2. One-to-Many Relationship
+                        A one-to-many relationship means that one record in a table is associated with multiple records in another table. For example, a Category might have many Products.
+
+                        => Model Setup:
+
+                            // Category Model
+                                Category.hasMany(Product, {
+                                    foreignKey: 'category_id',
+                                    as: 'products', // Alias for easy reference
+                                });
+
+                            // Product Model
+                                Product.belongsTo(Category, {
+                                    foreignKey: 'category_id',
+                                    as: 'category', // Alias for easy reference
+                                });
+
+                        => Fetching Data:
+                            - Fetch a Category with its Products:
+
+                                const categoryWithProducts = await Category.findOne({
+                                where: { category_id: 'some-category-id' },
+                                    include: [
+                                        {
+                                        model: Product,
+                                        as: 'products', // Alias defined in association
+                                        attributes: ['product_name', 'price'],
+                                        },
+                                    ],
+                                });
+
+                                console.log(categoryWithProducts);
+
+                            - Fetch a Product with its Category:
+
+                                const productWithCategory = await Product.findOne({
+                                    where: { product_id: 'some-product-id' },
+                                        include: [
+                                            {
+                                            model: Category,
+                                            as: 'category', // Alias defined in association
+                                            attributes: ['name'],
+                                            },
+                                        ],
+                                    });
+
+                                console.log(productWithCategory);
+
+                    3. Many-to-Many Relationship
+                        A many-to-many relationship means that multiple records in one table are associated with multiple records in another table. For example, a User can have many Roles, and a Role can be assigned to many Users. This requires a join table to store the associations.
+
+                        => Model Setup:
+                            You already have a many-to-many relationship between Property and Amenity using a join table. Here’s how you can define another many-to-many relationship:
+
+                                // User Model
+                                    User.belongsToMany(Role, {
+                                        through: 'UserRoles', // The join table
+                                        foreignKey: 'user_id',
+                                        otherKey: 'role_id',
+                                        as: 'roles', // Alias for easy reference
+                                    });
+
+                                // Role Model
+                                    Role.belongsToMany(User, {
+                                        through: 'UserRoles', // The join table
+                                        foreignKey: 'role_id',
+                                        otherKey: 'user_id',
+                                        as: 'users', // Alias for easy reference
+                                    });
+
+                        => Fetching Data:
+                            - Fetch a User with its Roles:
+
+                                const userWithRoles = await User.findOne({
+                                    where: { id: 'some-user-id' },
+                                        include: [
+                                            {
+                                            model: Role,
+                                            as: 'roles', // Alias defined in association
+                                            attributes: ['role_name'],
+                                            through: { attributes: [] }, // Exclude join table data
+                                            },
+                                        ],
+                                });
+
+                            console.log(userWithRoles);
+
+                            - Fetch a Role with its Users:
+
+                                const roleWithUsers = await Role.findOne({
+                                    where: { role_id: 'some-role-id' },
+                                    include: [
+                                        {
+                                        model: User,
+                                        as: 'users', // Alias defined in association
+                                        attributes: ['first_name', 'last_name'],
+                                        through: { attributes: [] }, // Exclude join table data
+                                        },
+                                    ],
+                                });
+
+                            console.log(roleWithUsers);
+
+                    4. Using Aliases in Joins
+                        In all the above examples, you can see that aliases (as) are used to define the relationship 
+                        in a readable way. These aliases are used in the include option when querying the data 
+                        to specify which related model to include.
+
+                        Alias: as: 'roles' or as: 'profile' is used to refer to the association in a query, 
+                        ensuring that the data is loaded correctly.
+
+                    5. Excluding Join Table Data
+                        In many-to-many relationships, the join table (like UserRoles in the above example) 
+                        contains foreign keys that link the two models. If you don't want to include the join 
+                        table data in your result, you can specify through: { attributes: [] } as shown in the 
+                        many-to-many examples above.
+
+                    Recap:
+                        One-to-One: Use hasOne and belongsTo for direct relationships between two models 
+                            (e.g., User has one Profile).
+                        One-to-Many: Use hasMany and belongsTo to model a one-to-many relationship 
+                            (e.g., Category has many Products).
+                        Many-to-Many: Use belongsToMany with a through option to model a many-to-many relationship, 
+                            typically requiring a join table (e.g., User belongs to many Roles via a UserRoles join table).
+                            By defining your associations and using eager loading with include, you can easily perform 
+                            joins in Sequelize, fetching related data in a single query.
+                                    
+        ====================================================================
+        
+

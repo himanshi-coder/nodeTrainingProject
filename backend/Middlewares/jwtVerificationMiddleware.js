@@ -8,10 +8,16 @@ const authenticateJWT = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET); // Verify token
+    const decoded = jwt.verify(token, process.env.secretKey); // Verify token
+    console.log('decoded: =========>', decoded);
     req.user = decoded; // Attach decoded user info to the request
-    next();
   } catch (error) {
     return res.status(401).json({ message: 'Invalid Token!' });
   }
+  next();
+};
+
+//exporting module
+module.exports = {
+  authenticateJWT,
 };

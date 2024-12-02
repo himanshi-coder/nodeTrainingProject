@@ -5,6 +5,11 @@ const addAmenity = async (req, res) => {
   try {
     const { name } = req.body; // Get amenity name from request body
 
+    // Check if name is not provided or is an empty string
+    if (!name || name.trim() === '') {
+      return res.status(400).json({ message: 'Amenity name is required and cannot be empty.' });
+    }
+
     // Check if the amenity already exists
     const existingAmenity = await Amenity.findOne({ where: { name } });
     if (existingAmenity) {
@@ -87,10 +92,29 @@ const getAllCategories = async (req, res) => {
     const categoriesLimit = parseInt(limit);
 
     // Fetch Category with pagination
+
+
+    // A Sequelize method that:
+      // findAndCountAll: Fetches a set of records based on the (limit, offset).
+      // Returns records and the total count of rows in the database that match the query criteria.
+      // Pagination Parameters:
+        // limit: Specifies the maximum number of records to retrieve. This controls the size of each "page" of results.
+        // offset: Specifies how many records to skip before starting to fetch the results. This is used to determine which page of data you want to retrieve.
+      
+        // for example - categoriesLimit = 10 (10 records per page) and offset = 20, it retrieves records 21–30 (0-based index).
+          // LIMIT 10: Fetch 10 records.
+          // OFFSET 20: Skip the first 20 records.
+        // Raw query will be like this   
+        // SELECT * FROM categories
+          // ORDER BY name ASC
+          // LIMIT 10 OFFSET 20;
+          
+          // SELECT COUNT(*) FROM categories;
+    
     const categories = await Category.findAndCountAll({
       limit: categoriesLimit,
       offset: offset,
-      order: [['name', 'ASC']], // Optional: order by name
+      order: [['name', 'ASC']], // Optional: order by name  
     });
 
     // Calculate total number of pages

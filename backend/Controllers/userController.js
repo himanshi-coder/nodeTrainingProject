@@ -43,7 +43,7 @@ const signup = async (req, res) => {
    //generate token with the user's id and the secretKey in the env file
    if (user) {
      const token = jwt.sign({ id: user.id }, process.env.secretKey, {
-       expiresIn: 1 * 24 * 60 * 60 * 1000,
+       expiresIn: 2 * 24 * 60 * 60 * 1000,
      });
 
      console.log("user".trap, JSON.stringify(user, null, 2));
@@ -81,7 +81,7 @@ const login = async (req, res) => {
 
     if (isSame) {
       let token = jwt.sign({ id: user.id }, process.env.secretKey, {
-        expiresIn: 1 * 24 * 60 * 60 * 1000,
+        expiresIn: 2 * 24 * 60 * 60 * 1000,
       });
 
       //if password matches wit the one in the database

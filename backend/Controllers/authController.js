@@ -113,7 +113,7 @@ const verifyOtp = async (req, res) => {
         let token;
         if (user) {
             token = jwt.sign({ id: user.id }, process.env.secretKey, {
-                expiresIn: 1 * 24 * 60 * 60 * 1000,
+                expiresIn: 2 * 24 * 60 * 60 * 1000,
             });
             
             console.log("user".trap, JSON.stringify(user, null, 2));

@@ -396,3 +396,69 @@ ORM (Object Relational Mapping) ?
         ====================================================================
         
 
+
+=======================
+Topics to study 
+
+    1	Node.js Basics 	"What is Node.js: Understanding the event-driven, non-blocking I/O model.
+    Modules: require, exports, CommonJS vs ES6 modules (import/export).
+    Global Objects: _dirname, _filename, process, Buffer.
+    NPM (Node Package Manager): Installing, updating, and managing dependencies. "
+
+    2	Asynchronous Programming 	"Callbacks: Understanding callback functions and callback hell.
+    Promises: Handling async operations with then() and catch().
+    async/await: Simplified syntax for working with Promises.
+    Event Loop: How Node.js handles asynchronous operations.
+    Timers: setTimeout(), setInterval(), setImmediate().
+    "
+    3	HTTP Module 	"Creating HTTP Server: Basic server setup with http.createServer().
+    Handling HTTP Requests/Responses: Reading data from requests and sending responses.
+    Handling Routing and Query Parameters.
+    Serving Static Files.
+    "
+    4	APIs and RESTful Services 	"Building REST APIs: Understanding CRUD operations (Create, Read, Update, Delete).
+    Working with JSON: Sending and receiving JSON data.
+    API Versioning: Structuring routes for versioning APIs.
+    Authentication/Authorization: JWT (JSON Web Tokens), OAuth, Passport.js.
+    Rate Limiting: Preventing abuse by limiting API requests.
+    "
+    5	Databases 	"NoSQL Databases: MongoDB with mongoose for schema-based models.
+    SQL Databases: Using PostgreSQL or MySQL with sequelize, pg, or mysql drivers.
+    Database Operations: CRUD operations, queries, joins (for SQL), and aggregation (for NoSQL).
+    Connection Pools: Managing database connections efficiently.
+    ORMs: Object Relational Mapping tools like Sequelize and Mongoose.
+    "
+    6	Authentication & Authorization 	"JWT (JSON Web Tokens): Stateless authentication method.
+    Sessions and Cookies: Storing user sessions and managing cookies.
+    "
+    7	Error Handling	  "Synchronous vs Asynchronous Errors: Catching errors in callbacks, promises, and async/await.
+    Global Error Handling: Setting up error-handling middleware in Express.
+    Logging: Using console.log(), winston, or morgan for structured logging.
+    Graceful Error Handling: Gracefully shutting down the server on critical failures. "
+    8	Testing in Node.js 	"Unit Testing: Testing individual functions using frameworks like Mocha, Jest, or Jasmine.
+    Integration Testing: Testing how different parts of the application work together.
+    Mocking: Using sinon or jest for mocking objects and functions.
+    Supertest: Testing HTTP APIs with the supertest library.
+    "
+    9	Deployment and Scaling 	"Environment Variables: Managing different environments (development, production) using .env and dotenv.
+    PM2: Managing and scaling Node.js applications. "
+    10	Node.js Best Practices 	"Project Structure: Organizing large-scale applications.
+    Code Style and Linting: Using eslint, prettier for consistent code style.
+    API Documentation: Using Swagger or Postman to document APIs.
+    Version Control: Using Git effectively to manage code changes"
+
+=======================
+Questions for exam
+    
+=========
+env for ref 
+    secretKey = nodeJsTrainingProjectSecretKey # --> this key is used to create jwt token and verify token
+    SENDER_EMAIL = geetapanwar521@gmail.com # --> this id is used to generate otp emails for email verification
+    SENDER_EMAIL_PASS = btce fesa fbkx rahm # --> this is app password for the email id this is created with the google accound -> app password
+    # MAILER_SEND = mlsn.78232983c5185a9da0cecd1e4ae37cc0a7fcc9cd68dcb99e42d4a4e836b1e9ad 
+    # mlsn.78232983c5185a9da0cecd1e4ae37cc0a7fcc9cd68dcb99e42d4a4e836b1e9ad
+    # nodetrainingotpverifyuser
+    # MAILER_SEND_SERVER = smtp.mailersend.net
+    # MAILER_SEND_PORT = 587
+    # MAILER_SEND_USERNAME = MS_6vYBG0@trial-351ndgweprngzqx8.mlsender.net
+    # MAILER_SEND_PASSWORD = tY7McCOOby4FW7iC

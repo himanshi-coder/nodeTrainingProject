@@ -1,5 +1,5 @@
 const express = require('express');
-const { addProperty, editProperty, getAllProperties } = require('../controllers/propertyController');
+const { addProperty, editProperty, getAllProperties } = require('../Controllers/propertyController');
 const { addAmenity, addCategory, getAllAmenities, getAllCategories } = require('../Controllers/amenityCategoryController');
 const { authenticateJWT } = require('../Middlewares/jwtVerificationMiddleware');
 const router = express.Router();

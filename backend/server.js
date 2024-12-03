@@ -5,6 +5,7 @@ const cors = require("cors"); //(Cross-Origin Resource Sharing) To make your API
 const db = require('./Models'); // Import Sequelize models
 const authRoutes = require ('./Routes/authRoutes')
 const propertyRoutes = require ('./Routes/propertyRoutes')
+const rentalRequestRoutes = require ('./Routes/rentalRequestRoutes')
 
 //#region setting up port
 // const PORT = process.env.port || 5000;
@@ -37,6 +38,7 @@ db.sequelize.sync({ alter: true }) // Adjust schema without dropping tables
 
 app.use('/api/auth', authRoutes) //for the user API
 app.use('/api', propertyRoutes); // Use the property routes
+app.use('/api/rentals', rentalRequestRoutes); // Use the rental Requests routes
 app.use('/', (req, res) => {
     return res.send('Hi from server');
 });

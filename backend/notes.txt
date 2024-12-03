@@ -449,8 +449,893 @@ Topics to study
 
 =======================
 Questions for exam
+    1. Node.js Basics
+        1.1 What is Node.js, and how does its event-driven, non-blocking I/O model work?
+        1.2 Explain the difference between CommonJS and ES6 modules. Provide examples of require vs. import.
+        1.3 What are _dirname and _filename? How are they used?
+        1.4 What is the process object in Node.js, and what are some of its key methods?
+        1.5 How do you install, update, and remove dependencies using NPM?
+        1.6 What is the purpose of the Buffer class in Node.js?
+
+    2. Asynchronous Programming
+        2.1 What is the Event Loop in Node.js? How does it handle asynchronous operations?
+        2.2 Explain callback functions and provide an example of callback hell.
+        2.3 How do Promises work in Node.js? What are then() and catch() used for?
+        2.4 Rewrite a callback-based function using Promises.
+        2.5 What is the purpose of async/await, and how does it simplify working with Promises?
+        2.6 Explain the difference between setTimeout, setInterval, and setImmediate.
+
+    3. HTTP Module
+        3.1 How do you create a basic HTTP server in Node.js? Provide an example.
+        3.2 How can you handle incoming HTTP requests and send responses?
+        3.3 What are query parameters, and how can you handle them in a Node.js HTTP server?
+        3.4 Write a code snippet to serve static files using the http module.
+        3.5 Explain the difference between GET, POST, PUT, DELETE methods in HTTP.
+
+    4. APIs and RESTful Services
+        What are the core principles of REST APIs?
+        Write an example of a basic CRUD operation using a REST API in Node.js.
+        How do you handle API versioning in a Node.js application?
+        What is JWT, and how is it used in authentication?
+        Explain the concept of rate limiting and how to implement it in an API.
+        How do you send and receive JSON data in a Node.js application?
+
+    5. Databases
+        What is the difference between SQL and NoSQL databases? Provide examples.
+        Explain how to perform CRUD operations in MongoDB using Mongoose.
+        Write an example of querying a SQL database using Sequelize.
+        What are connection pools, and why are they important?
+        Explain the concept of aggregation in MongoDB with an example.
+        What is ORM? How does Sequelize or Mongoose simplify database operations?
+
+    6. Authentication & Authorization
+        What is the difference between sessions and JWT for authentication?
+        Write an example of implementing user authentication using JWT in Node.js.
+        How do cookies work in managing user sessions?
+        Explain the difference between authentication and authorization.
+
+    7. Error Handling
+        What is the difference between synchronous and asynchronous errors? Provide examples.
+        How can you handle errors in a Promise chain?
+        What is error-handling middleware in Express? Write a basic example.
+        How do you log errors in Node.js using libraries like Winston or Morgan?
+        What steps would you take to gracefully shut down a server in the event of a critical failure?
+
+    8. Testing in Node.js
+        What is the difference between unit testing and integration testing?
+        Write a unit test for a simple function using Jest.
+        How do you mock dependencies using Sinon or Jest?
+        Write an integration test for a REST API using Supertest.
+        Why is testing important in Node.js applications?
+
+    9. Deployment and Scaling
+        How do you manage environment variables in a Node.js application?
+        Explain the role of PM2 in deploying and scaling Node.js applications.
+        Write a basic ecosystem.config.js file for PM2 deployment.
+        What is the importance of .env files, and how do you load them using the dotenv library?
+
+    10. Node.js Best Practices
+        How would you structure a large-scale Node.js application?
+        Why is it important to use linters like ESLint or Prettier?
+        What is API documentation, and how do Swagger and Postman help with it?
+        How do you manage code versions using Git? Provide examples of common Git commands.
+        What are some best practices for error handling in Node.js applications?
+
+================================
+
+Questions with explainations
+    :::::::::::
+    1.1 What is Node.js, and how does its event-driven, non-blocking I/O model work?
+        Event-Driven, Non-Blocking I/O Model
+        1. Event-Driven Architecture
+            Node.js relies on an event-driven model, where an event loop listens for and processes events, such as HTTP requests, file reads, or database queries.
+
+            Events are triggered as tasks are completed or as specific conditions are met (e.g., receiving data from a file read).
+            A corresponding callback function is executed when the event occurs.
+            Example:
+
+            ----------
+                const fs = require('fs');
+
+                // Reading a file asynchronously
+                fs.readFile('example.txt', 'utf-8', (err, data) => {
+                    if (err) {
+                        console.error('Error reading file:', err);
+                        return;
+                    }
+                    console.log('File content:', data);
+                });
+
+                console.log('File reading initiated...');
+
+                Output:
+                    File reading initiated...
+                    File content: [file data]
+                    Notice that the file reading does not block the execution of the next line of code.
+            -------
+
+        2. Non-Blocking (I/O - input/output operations)
+            Node.js uses non-blocking input/output operations, which means that tasks like reading files, querying databases, or making network requests are performed asynchronously without blocking the execution of other tasks.
+
+            Blocking I/O: The program waits until the current task finishes before moving to the next.
+            Non-Blocking I/O: The program moves to the next task immediately and executes the I/O operation in the background.
+                Example:
+                    const http = require('http');
+
+                    // Creating an HTTP server
+                    const server = http.createServer((req, res) => {
+                        res.end('Hello, world!');
+                    });
+
+                    // Server listens on port 3000
+                    server.listen(3000, () => {
+                        console.log('Server is running on port 3000...');
+                    });
+            The listen function is non-blocking, allowing the server to handle multiple requests simultaneously.
+
+        3. Event Loop
+            The event loop is a core mechanism in Node.js that enables non-blocking behavior. It continuously checks for events or tasks in different phases, such as:
+                Timers (setTimeout, setInterval)
+                Pending I/O operations
+                Callbacks
+                Closures and Promises
+            The event loop ensures that operations are handled one at a time, even in an asynchronous environment.
+
+            Advantages of the Model:
+                High Performance: Efficiently handles thousands of concurrent requests.
+                Scalability: Ideal for real-time applications like chat apps and online gaming.
+                Asynchronous Programming: No waiting for I/O operations to complete.
+            
+            Use Case Examples
+                Real-Time Applications: Chat servers, live streaming, or collaborative tools.
+                API Backends: Handling multiple HTTP requests efficiently.
+                File Operations: Reading/writing files without blocking other operations.
+    :::::::::::
+    1.2 Explain the difference between CommonJS and ES6 modules. Provide examples of require vs. import.
+        
+        Difference Between CommonJS and ES6 Modules
+            Node.js and JavaScript use modules to encapsulate code into reusable units. CommonJS and ES6 are two different module systems used in JavaScript:
+
+        CommonJS Modules
+            Introduction: CommonJS is the default module system used in Node.js (pre-ES6).
+            Usage: Modules are imported using require() and exported using module.exports or exports.
+            Synchronous Loading: Modules are loaded synchronously, meaning the file is read and executed immediately.
+            Platform Support: Works natively in Node.js but not directly in browsers without tools like Webpack or Browserify.
+            Exports Type: CommonJS modules export an object.
+
+            Example:
+
+                // math.js (CommonJS module)
+                function add(a, b) {
+                    return a + b;
+                }
+                function subtract(a, b) {
+                    return a - b;
+                }
+
+                // Export functions
+                module.exports = { add, subtract };
+
+                // main.js
+                const math = require('./math'); // Importing the module
+                console.log(math.add(5, 3)); // Output: 8
+                console.log(math.subtract(5, 3)); // Output: 2
+
+        ES6 Modules
+            Introduction: Introduced in ECMAScript 2015 (ES6), ES6 modules are the standard for JavaScript.
+            Usage: Modules are imported using import and exported using export.
+            Asynchronous Loading: Modules are loaded asynchronously, making them suitable for modern web development.
+            Platform Support: Supported natively in modern browsers and in Node.js (from version 12+) with the .mjs extension or "type": "module" in package.json.
+            Exports Type: ES6 modules export individual bindings.
+
+            Example:
+
+                // math.mjs (ES6 module)
+                export function add(a, b) {
+                    return a + b;
+                }
+                export function subtract(a, b) {
+                    return a - b;
+                }
+
+                // main.mjs
+                import { add, subtract } from './math.mjs'; // Import specific functions
+                console.log(add(5, 3)); // Output: 8
+                console.log(subtract(5, 3)); // Output: 2
+
+        Key Differences
+            Feature         | CommonJS	                    | ES6 Modules
+            -------------------------------------------------------------------------------------------
+            Syntax	        | require()                     | and module.exports	import and export
+            -------------------------------------------------------------------------------------------
+            Loading	        | Synchronous	                | Asynchronous
+            -------------------------------------------------------------------------------------------
+            Default         | Export	                    | Exports a single object	Can export individual bindings or a default export
+            -------------------------------------------------------------------------------------------
+            Browser         | Support	                    | Not natively supported	Natively supported in modern browsers
+            -------------------------------------------------------------------------------------------
+            Dynamic         | Import Possible via require()	| Use import() for dynamic loading
+            -------------------------------------------------------------------------------------------
+            File Extension  |.js	                        | .mjs or .js with "type": "module"
+            -------------------------------------------------------------------------------------------
+        
+        Dynamic Import
+            CommonJS:
+                const moduleName = './math';
+                const math = require(moduleName);
+            ES6:
+                const moduleName = './math.mjs';
+                import(moduleName).then((math) => {
+                    console.log(math.add(5, 3));
+                });
+
+        When to Use Each
+            CommonJS: Use for older Node.js versions or when working on a Node.js-only project without modern tooling.
+            ES6 Modules: Use for modern projects, especially those targeting browsers or Node.js environments with "type": "module" enabled.
+    :::::::::::
+    1.3 What are __dirname and __filename in Node.js? How are they used?
+        
+            __dirname and __filename are global variables in Node.js that provide useful information about the paths of the current module:
+
+            1. __dirname
+                Represents the directory name of the current module.
+                It gives the absolute path of the folder containing the file being executed.
+                Always points to the directory where the script resides, regardless of the current working directory.
+            
+            2. __filename
+                Represents the file name of the current module.
+                It gives the absolute path of the file being executed.
+                Includes the full path of the script file, along with its name.
+
+            Use Cases
+                Building Paths Dynamically
+                Since paths can vary based on the environment, using __dirname and __filename ensures platform-independent and absolute paths.
+
+                Serving Static Files
+                These variables are often used in web servers to serve static files like HTML, CSS, and JavaScript.
+
+                File System Operations
+                They are used in conjunction with Node.js's fs module to work with files and directories.
+
+            Examples
+                Using __dirname
+                    const path = require('path');
+
+                    // Log the directory of the current module
+                    console.log(__dirname);
+
+                    // Join `__dirname` with another path to create an absolute path
+                    const filePath = path.join(__dirname, 'example.txt');
+                    console.log(filePath);
+
+                    Output:
+                        /home/user/project
+                        /home/user/project/example.txt
+
+                Using __filename
+                    // Log the full path of the current module
+                    console.log(__filename);
+                    Output:
+                        /home/user/project/app.js
+
+                Difference Between __dirname and process.cwd()
+                    __dirname:
+                        Always resolves to the directory where the script resides.
+                    process.cwd():
+                        Resolves to the current working directory where the Node.js process was started.
+                        Example:
+                            console.log(__dirname);  // e.g., /home/user/project
+                            console.log(process.cwd()); // e.g., /home/user
+                    Using __dirname to Serve Static Files
+                        In a web server setup, you might use __dirname to create an absolute path for serving static files.
+
+                        Example:
+                            const http = require('http');
+                            const fs = require('fs');
+                            const path = require('path');
+
+                            http.createServer((req, res) => {
+                                const filePath = path.join(__dirname, 'public', 'index.html');
+                                fs.readFile(filePath, (err, data) => {
+                                    if (err) {
+                                        res.writeHead(500);
+                                        res.end('Error loading file');
+                                        return;
+                                    }
+                                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                                    res.end(data);
+                                });
+                            }).listen(3000, () => {
+                                console.log('Server running on http://localhost:3000');
+                            });
+            
+            Key Points
+                __dirname and __filename provide absolute paths for the current module.
+                They are essential for file system operations and dynamic path management.
+                Unlike relative paths (./), these variables ensure paths remain consistent regardless of the execution environment.
+    :::::::::::
+    1.4 What is the process object in Node.js, and what are some of its key methods?
+        The process object in Node.js is a global object that provides information and control over the current Node.js process.
+        It allows interaction with the operating system, environment, and the command-line arguments passed during execution.
+
+        Key Features of process
+            No need to import it (it's globally available).
+            Provides methods and properties for:
+            Managing environment variables.
+            Exiting or killing the process.
+            Listening for events like signals (SIGINT, SIGTERM).
+            Accessing command-line arguments.
+
+        Some Key Methods of process
+
+            1. process.argv
+                Returns an array containing the command-line arguments passed to the Node.js script.
+                The first two elements are:
+                    process.argv[0]: Path to the Node.js binary.
+                    process.argv[1]: Path to the script being executed.
+
+                Example:
+                console.log(process.argv);
+                // Running: `node script.js hello`
+                // Output: [ '/usr/bin/node', '/path/to/script.js', 'hello' ]
+
+            2. process.env
+                Provides access to environment variables as an object.
+
+                Example:
+                    console.log(process.env.PATH);
+                    process.env.MY_VARIABLE = 'custom_value';
+                    console.log(process.env.MY_VARIABLE); // Output: custom_value
+
+            3. process.exit([code])
+                Terminates the Node.js process.
+                code is an optional exit code (0 for success, non-zero for failure).
+                Example:
+                    if (!process.env.REQUIRED_ENV) {
+                        console.error('Missing required environment variable!');
+                        process.exit(1); // Exit with an error code
+                    }
+
+            4. process.cwd()
+                Returns the current working directory of the process.
+                Example:
+                    console.log(`Current working directory: ${process.cwd()}`);
+
+            5. process.on(event, callback)
+                Attaches event listeners to process events like exit, SIGINT, uncaughtException.
+                Example:
+                    process.on('exit', (code) => {
+                        console.log(`Process exited with code: ${code}`);
+                    });
+
+            6. process.memoryUsage()
+                Returns an object with information about the memory usage of the Node.js process.
+                Example:
+                    console.log(process.memoryUsage());
+                        /*
+                        Output:
+                            {
+                            rss: 35000320, // Resident Set Size
+                            heapTotal: 18227200,
+                            heapUsed: 9980128,
+                            external: 872072
+                            }
+                        */
+
+            7. process.uptime()
+                Returns the number of seconds the Node.js process has been running.
+                Example:
+                    console.log(`Uptime: ${process.uptime()} seconds`);
+
+            8. process.stdin, process.stdout, and process.stderr
+                process.stdin: For reading input from the terminal.
+                process.stdout: For writing output to the terminal.
+                process.stderr: For writing error messages.
+                Example:
+                    process.stdin.on('data', (data) => {
+                        console.log(`Input: ${data.toString()}`);
+                    });
+
+                    process.stdout.write('Hello, world!\n');
+
+        Key Properties of process
+            Property	        | Description
+            ----------------------------------------------------------------
+            process.pid	        | The process ID of the Node.js process.
+            process.version	    | Node.js version (e.g., v16.15.0).
+            process.platform	| Operating system platform (win32, linux).
+            process.arch	    | CPU architecture (x64, arm).
+            process.hrtime()	| High-resolution timer for measuring execution times.
+
+            Example: Combining Methods
+                console.log(`Node.js version: ${process.version}`);
+                console.log(`Platform: ${process.platform}`);
+                console.log(`CPU Architecture: ${process.arch}`);
+
+                process.on('SIGINT', () => {
+                    console.log('Caught interrupt signal');
+                    process.exit(0); // Graceful shutdown
+                });
+
+                setTimeout(() => {
+                    console.log('Exiting after 5 seconds...');
+                    process.exit(0);
+                }, 5000);
+        
+        Summary
+                The process object is central to managing and interacting with a Node.js application. By leveraging its methods and properties, developers can handle system-level functionality like environment variables, command-line arguments, process lifecycle, and memory usage effectively.
+    :::::::::::
+    1.5 How do you install, update, and remove dependencies using NPM?
+        Action	Command
+                Install a package	        | npm install <package-name>
+            ----------------------------------------------------------
+                Install globally	        | npm install -g <package-name>
+            ----------------------------------------------------------
+                Update a package	        | npm update <package-name>
+            ----------------------------------------------------------
+                Update all packages	        | npm update
+            ----------------------------------------------------------
+                Remove a package	        | npm uninstall <package-name>
+            ----------------------------------------------------------
+                Remove globally	            | npm uninstall -g <package-name>
+            ----------------------------------------------------------
+                Check outdated packages	    | npm outdated
+            ----------------------------------------------------------
+                Install all dependencies	| npm install
+            ----------------------------------------------------------
+                Audit dependencies	        | npm audit / npm audit fix
+            ---------------------------------------------------------- 
+
+        types of dependencies in package.json:
+
+            Type	            Flag	    Use Case
+            -------------------------------------------------------------
+            Dependencies	    Default	    Required for the app to run.
+            DevDependencies	    --save-dev	Only needed during development or testing.
+            PeerDependencies	None	    Specify compatible dependencies required by consumers.
+
+            Example:
+                "dependencies": {
+                "express": "^4.17.1"
+                },
+                "devDependencies": {
+                "jest": "^29.0.0"
+                },
+                "peerDependencies": {
+                "react": "^16.0.0"
+                }
+
+        Specifying Version Ranges
+            You can specify version ranges when installing or updating packages:
+                npm install <package-name>@x.y.z: Installs a specific version.
+                npm install <package-name>@^x.y.z: Allows minor and patch updates.
+                npm install <package-name>@~x.y.z: Allows only patch updates.
+
+            You can install packages from Git repositories, tarballs, or local paths.
+                npm install <git-repo-url>
+                npm install https://github.com/expressjs/express
+
+            Globally installed packages: npm list -g
+        
+        Managing Cache
+            Clear NPM Cache: npm cache clean --force
+        
+        npx is used to execute packages without globally installing them.
+    :::::::::::
+    1.6 What is the purpose of the Buffer class in Node.js?
+        The Buffer class in Node.js is used to handle binary data directly, particularly useful when dealing with streams of data or operations that involve file systems, networking, or cryptographic tasks. Buffers allow Node.js to interact with raw data, which is represented in the form of a sequence of bytes.
+
+        Purpose of the Buffer Class
+            Binary Data Handling: Provides an efficient way to manage and manipulate raw binary data.
+            Stream Data Management: Used in streams to process chunks of data, like reading files or handling network requests.
+            Encoding and Decoding: Supports data encoding and decoding, such as converting between UTF-8, Base64, and binary formats.
+            Low-Level I/O Operations: Facilitates interaction with file systems, sockets, or other I/O interfaces that require byte-level manipulation.
+
+        How to Create Buffers
+            Using Buffer.alloc(): Allocates a buffer with specified size, initialized to zero.
+                const buf = Buffer.alloc(5); // Allocates 5 bytes
+                console.log(buf); // <Buffer 00 00 00 00 00>
+
+            Using Buffer.from(): Creates a buffer from a given value (e.g., string, array).
+                const buf = Buffer.from('Hello');
+                console.log(buf); // <Buffer 48 65 6c 6c 6f>
+        
+            Using Buffer.allocUnsafe(): Allocates uninitialized memory (faster but potentially insecure).
+                const buf = Buffer.allocUnsafe(5);
+                console.log(buf); // Uninitialized memory
+
+        Common Buffer Operations
+            Writing Data into a Buffer:
+                const buf = Buffer.alloc(10);
+                buf.write('Node');
+                console.log(buf.toString()); // 'Node'
+
+            Reading Data from a Buffer:
+                const buf = Buffer.from('Node.js');
+                console.log(buf.toString('utf8')); // 'Node.js'
+
+            Concatenating Buffers:
+                const buf1 = Buffer.from('Hello, ');
+                const buf2 = Buffer.from('World!');
+                const buf3 = Buffer.concat([buf1, buf2]);
+                console.log(buf3.toString()); // 'Hello, World!'
+
+            Comparing Buffers:
+                const buf1 = Buffer.from('abc');
+                const buf2 = Buffer.from('xyz');
+                console.log(buf1.compare(buf2)); // -1 (buf1 is less than buf2)
+
+            Slicing a Buffer:
+                const buf = Buffer.from('Node.js');
+                const slicedBuf = buf.slice(0, 4);
+                console.log(slicedBuf.toString()); // 'Node'
+
+            Converting Buffer to JSON:
+                const buf = Buffer.from('Node.js');
+                console.log(buf.toJSON());
+                // { type: 'Buffer', data: [ 78, 111, 100, 101, 46, 106, 115 ] }
+
+        When to Use the Buffer Class
+            File System Operations: For reading and writing binary files.
+                const fs = require('fs');
+                const buf = fs.readFileSync('file.txt');
+                console.log(buf.toString());
+
+            Stream Data Processing: Handles chunks of data in streams (e.g., network requests).
+
+            Encoding and Decoding: Converts between encodings for cryptographic or data exchange purposes.
+
+            Custom Protocols: For working with non-JSON, binary-based protocols.
+
+            Example: Encoding and Decoding
+                const buf = Buffer.from('Hello, World!');
+                console.log(buf.toString('hex')); // Hexadecimal encoding
+                console.log(buf.toString('base64')); // Base64 encoding
+
+        Advantages of the Buffer Class
+            Low-level access to binary data.
+            Highly efficient for processing large data streams.
+            Supports multiple encoding formats.
+    :::::::::::
+    2.1 What is the Event Loop in Node.js? How does it handle asynchronous operations?
+        The Event Loop is the core mechanism in Node.js that enables non-blocking, asynchronous operations. It allows Node.js to perform I/O operations (like reading files, handling network requests) without blocking the execution of other code.
+        Node.js is single-threaded, but thanks to the event loop, it can handle multiple operations concurrently by delegating tasks to the system kernel or worker threads and processing the results asynchronously.
+
+        How the Event Loop Works
+            The event loop continuously monitors the call stack and event queue. Here's a breakdown of how it works:
+
+            Call Stack:
+
+                Contains functions that are currently being executed.
+                When the main program runs, its functions are pushed onto the call stack and executed synchronously.
+        
+            Event Queue:
+
+                Holds callback functions waiting to be executed.
+                These callbacks are added by asynchronous operations (like setTimeout, I/O operations, etc.).
+        
+            Event Loop Mechanism:
+
+                Continuously checks if the call stack is empty.
+                If the stack is empty, it pushes the first callback from the event queue to the stack for execution.
+        
+        Phases of the Event Loop
+            The event loop operates in phases. Each phase handles a specific type of operation:
+
+            Timers Phase:
+
+                Executes callbacks from setTimeout() and setInterval() if their scheduled time has elapsed.
+        
+            Pending Callbacks Phase:
+
+                Executes I/O callbacks that were deferred.
+        
+            Idle, Prepare Phase:
+
+                Internal use only (used by Node.js internals).
+            
+            Poll Phase:
+
+                Retrieves new I/O events.
+                Executes I/O-related callbacks (e.g., reading files, receiving data from a network).
+            
+            Check Phase:
+
+                Executes callbacks from setImmediate().
+        
+            Close Callbacks Phase:
+
+                Handles cleanup and close events (e.g., socket.close()).
+                
+        How the Event Loop Handles Asynchronous Operations
+
+            Timers:
+                setTimeout and setInterval schedule callbacks to run after a specified time.
+                    console.log('Before timeout');
+                    setTimeout(() => {
+                    console.log('Timeout callback');
+                    }, 1000);
+                    console.log('After timeout');
+                    // Output:
+                    // Before timeout
+                    // After timeout
+                    // Timeout callback
+        
+            Promises:
+                Promises and async/await callbacks are handled in the microtask queue, which takes precedence over the event queue.
+                    console.log('Start');
+                    Promise.resolve().then(() => console.log('Promise resolved'));
+                    console.log('End');
+                    // Output:
+                    // Start
+                    // End
+                    // Promise resolved
+
+            I/O Operations:
+                I/O tasks (like reading files) are delegated to the system kernel or worker threads.
+                Once completed, the callbacks are added to the event queue.
+                
+                    const fs = require('fs');
+                    console.log('Start');
+                    fs.readFile('example.txt', (err, data) => {
+                    if (err) throw err;
+                        console.log('File read complete');
+                    });
+                    console.log('End');
+                    // Output:
+                        // Start
+                        // End
+                        // File read complete
+
+            setImmediate:
+
+                Executes its callbacks in the check phase, after I/O callbacks and before timers.
+            
+                setImmediate(() => console.log('setImmediate callback'));
+                setTimeout(() => console.log('setTimeout callback'), 0);
+                // Output:
+                    // setTimeout callback
+                    // setImmediate callback
+
+        Visualization of the Event Loop
+       
+            Call Stack      | Event Queue         | Microtask Queue
+            --------------------------------------------------------------
+            [main()]        | [I/O callbacks]     | [Promise callbacks]
+                            | [Timers]
+                            | [setImmediate]
+
+        Summary of the Event Loop's Role
+            Manages and coordinates asynchronous operations.
+            Ensures non-blocking behavior by delegating tasks to the kernel or worker threads.
+            Executes callbacks in a predictable, phased manner.
+            Handles both macro-tasks (e.g., I/O callbacks) and micro-tasks (e.g., Promises).
+            Understanding the event loop is crucial for writing efficient, scalable, and non-blocking Node.js applications.
+    :::::::::::
+    2.2 Explain callback functions and provide an example of callback hell.
+    :::::::::::
     
-=========
+    :::::::::::
+    3.1 How do you create a basic HTTP server in Node.js? Provide an example.
+        Creating a Basic HTTP Server in Node.js
+            The http module in Node.js allows you to create a basic HTTP server that can handle incoming requests and send responses. Here's how you can create and run an HTTP server:
+
+        Steps to Create a Basic HTTP Server
+            Import the http Module: Use the built-in http module to create the server.
+            Create the Server: Use the http.createServer() method. This method takes a callback function with two parameters:
+            request: Contains information about the incoming HTTP request.
+            response: Used to send back data to the client.
+            Listen on a Port: Use the server.listen(port) method to make the server listen for incoming requests on a specific port.
+
+            Example Code
+                const http = require('http');
+
+                const server = http.createServer((req, res) => {
+                if (req.url === '/' && req.method === 'GET') {
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
+                    res.end('Welcome to the Home Page!');
+                } else if (req.url === '/about' && req.method === 'GET') {
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
+                    res.end('About Us Page');
+                } else {
+                    res.writeHead(404, { 'Content-Type': 'text/plain' });
+                    res.end('404 Not Found');
+                }
+                });
+
+                const PORT = 3000;
+                server.listen(PORT, () => {
+                console.log(`Server is running on http://localhost:${PORT}`);
+                });
+    :::::::::::
+    3.2 How can you handle incoming HTTP requests and send responses?
+        You can handle different HTTP methods (e.g., GET, POST, PUT, DELETE) by checking the req.method property.
+            sending text as an response 
+                ---------------
+                    const http = require('http');
+
+                    const server = http.createServer((req, res) => {
+                    // Handle GET request
+                    if (req.method === 'GET') {
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'text/plain');
+                        res.end('You made a GET request');
+                    }
+                    
+                    // Handle POST request
+                    else if (req.method === 'POST') {
+                        let body = '';
+                        
+                        // Read data from the request body
+                        req.on('data', chunk => {
+                        body += chunk;
+                        });
+
+                        req.on('end', () => {
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(`You made a POST request with data: ${body}`);
+                        });
+                    }
+                    
+                    // Handle other HTTP methods
+                    else {
+                        res.statusCode = 405; // Method Not Allowed
+                        res.setHeader('Content-Type', 'text/plain');
+                        res.end('Method Not Allowed');
+                    }
+                    });
+
+                    server.listen(3000, () => {
+                    console.log('Server running at http://localhost:3000/');
+                    });
+                -----------------
+                Explanation of the HTTP Method Handling Example:
+                    req.method === 'GET': This checks the HTTP method of the incoming request. If it's a GET request, the server responds with a simple text message.
+
+                    req.on('data', chunk => {...}): When handling a POST request, the data sent by the client is received in chunks. These chunks are combined into a full body of the request.
+
+                    req.on('end', () => {...}): Once all chunks have been received, the server sends a response, including the data sent by the client.
+
+            Sending JSON Response
+                If you want to send a JSON response, you can use the JSON.stringify() method to convert an object to a JSON string.
+                    -------------------------------------------------
+                        const http = require('http');
+
+                        const server = http.createServer((req, res) => {
+                        if (req.method === 'GET') {
+                            res.statusCode = 200;
+                            res.setHeader('Content-Type', 'application/json');
+                            const responseObject = { message: 'Hello, World!', status: 'success' };
+                            res.end(JSON.stringify(responseObject)); // Send JSON response
+                        } else {
+                            res.statusCode = 405; // Method Not Allowed
+                            res.setHeader('Content-Type', 'text/plain');
+                            res.end('Method Not Allowed');
+                        }
+                        });
+
+                        server.listen(3000, () => {
+                        console.log('Server running at http://localhost:3000/');
+                        });
+                    ------------------------------------------------
+
+            Serving Static Files
+                To serve static files, like HTML, CSS, or JavaScript, you can use the fs module to read files and then send them in the response.
+                    -------------------------------------------------------
+                        const http = require('http');
+                        const fs = require('fs');
+                        const path = require('path');
+
+                        const server = http.createServer((req, res) => {
+                            const filePath = path.join(__dirname, 'index.html'); // Path to the static file
+
+                            // Read the file and send it in the response
+                            fs.readFile(filePath, (err, data) => {
+                                if (err) {
+                                    res.statusCode = 500;
+                                    res.setHeader('Content-Type', 'text/plain');
+                                    res.end('Error reading file');
+                                } else {
+                                    res.statusCode = 200;
+                                    res.setHeader('Content-Type', 'text/html');
+                                    res.end(data); // Send the file content
+                                }
+                            });
+                        });
+
+                        server.listen(3000, () => {
+                            console.log('Server running at http://localhost:3000/');
+                        });
+                    -------------------------------------------------------
+
+            Working with Image File
+                To accept image uploads in a Node.js application, you can use middleware to handle the file parsing and storage. The most commonly used module for this task is multer, which is a Node.js middleware for handling multipart/form-data (used for uploading files).
+
+                Steps to Accept Image Uploads Using multer:
+                    Install multer: Install multer via npm:
+                        npm install multer
+
+                    Set Up Multer Middleware:
+                        multer will handle the image upload and provide details about the uploaded file (e.g., file path, original name).
+                        You can configure multer to save the uploaded image to a specific folder and set limits for file size and file types.
+                    
+                    Set Up Express Server:
+                        Create an Express app that uses multer to accept image uploads.
+                        
+                    Example: Accepting Image Uploads with Multer
+                        1. Create a Server to Handle Image Upload
+                            const express = require('express');
+                            const multer = require('multer');
+                            const path = require('path');
+
+                            const app = express();
+
+                            // Set up multer storage options
+                            const storage = multer.diskStorage({
+                            destination: function (req, file, cb) {
+                                // Set the directory where files will be uploaded
+                                cb(null, './uploads');
+                            },
+                            filename: function (req, file, cb) {
+                                // Save the file with its original name
+                                cb(null, Date.now() + path.extname(file.originalname)); // e.g., 1638480548834.jpg
+                            }
+                            });
+
+                            // Create the upload instance and specify file size limit (in bytes)
+                            const upload = multer({
+                            storage: storage,
+                            limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB file size limit
+                            fileFilter: function (req, file, cb) {
+                                // Accept only image files
+                                const filetypes = /jpeg|jpg|png|gif/;
+                                const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+                                const mimetype = filetypes.test(file.mimetype);
+                                
+                                if (extname && mimetype) {
+                                return cb(null, true);
+                                } else {
+                                cb(new Error('Invalid file type. Only images are allowed.'));
+                                }
+                            }
+                            }).single('image'); // 'image' is the field name for the file in the form
+
+                            // Handle POST request to upload image
+                            app.post('/upload', (req, res) => {
+                            upload(req, res, (err) => {
+                                if (err) {
+                                // If there's an error during upload (e.g., invalid file type or size exceeded)
+                                return res.status(400).send(err.message);
+                                }
+                                // If upload is successful, send response with file details
+                                res.status(200).send({
+                                message: 'File uploaded successfully',
+                                file: req.file
+                                });
+                            });
+                            });
+
+                            // Start the server
+                            app.listen(3000, () => {
+                            console.log('Server is running on http://localhost:3000');
+                            });
+
+                        2. Explanation of the Code:
+                            multer.diskStorage(): This method defines how and where to store uploaded files. In this case, we specify the uploads folder as the destination and use the current timestamp as the filename to avoid name conflicts.
+
+                            upload.single('image'): This middleware accepts a single image file uploaded via the image field. The field name must match the one used in the HTML form or client-side request.
+
+                            File Size and Type Validation: In the multer configuration:
+                                We limit the file size to 5MB (fileSize: 5 * 1024 * 1024).
+                                We use a file filter to allow only image files (JPEG, PNG, GIF).
+                                req.file: After the file is uploaded successfully, multer will attach the file metadata (like file path and name) to the req.file object.
+    :::::::::::
+    3.3 What are query parameters, and how can you handle them in a Node.js HTTP server?
+        
+
+
+=================================
 env for ref 
     secretKey = nodeJsTrainingProjectSecretKey # --> this key is used to create jwt token and verify token
     SENDER_EMAIL = geetapanwar521@gmail.com # --> this id is used to generate otp emails for email verification

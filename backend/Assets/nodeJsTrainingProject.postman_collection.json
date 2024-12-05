@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "ba2168ec-6ad2-45fc-ae8d-a3df0cc62002",
+		"name": "nodeJsTrainingProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "37618458"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/api/auth/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"user_name\": \"johndoe123\",\n  \"email\": \"dots1@yopmail.com\",\n  \"phone\": \"+1234567890\",\n  \"role\": \"user\",\n  \"password\": \"Dots@123\",\n  \"access_token\": \"Dots@123\",\n  \"remember_me\": true,\n  \"status\": \"1\",\n  \"reset_password_token\": \"randomresetpasswordtoken\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/auth/signup"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/auth/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"dots@yopmail.com\",\n  \"password\": \"Dots@123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/auth/forgot-password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"dots1@yopmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/auth/forgot-password"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/auth/verify-otp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/auth/verify-otp"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/auth/reset-password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"dots4@yopmail.com\",\n  \"otp\": \"535357\",\n  \"newPassword\": \"Dots\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/auth/reset-password"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/properties",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Luxury Apartment\",\n  \"description\": \"A beautiful apartment with ocean view.\",\n  \"property_type\": \"residential\",\n  \"price_per_month\": 2000,\n  \"currency\": \"USD\",\n  \"bedrooms\": \"3\",\n  \"bathrooms\": \"2\",\n  \"square_feet\": \"1200\",\n  \"furnished\": true,\n  \"address\": { \"street\": \"123 Ocean Drive\", \"city\": \"Miami\" },\n  \"longitude\": \"25.7617\",\n  \"latitude\": \"-80.1918\",\n  \"is_available\": true,\n  \"available_from\": \"2024-12-01\",\n  \"lease_terms\": \"12 months\",\n  \"images\": [\"image1.jpg\", \"image2.jpg\"],\n  \"owner_id\": \"some-uuid\",\n  \"category_id\": \"some-category-uuid\",\n  \"amenities\": [\"amenity-id-1\", \"amenity-id-2\"]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/properties"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/properties?page=2&size=5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJkNzQxYjFjLTk0YzctNGIwOS1iYjVkLWFmZjA5OTNmZmYwMyIsImlhdCI6MTczMjg4NjIyMywiZXhwIjoxOTA1Njg2MjIzfQ.AXvKzFOB5Cc1N0gnbEuoiaRNlkU4OVv5zlWwM2GWDdU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/properties?page=1&limit=5&search=Luxury",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"properties"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "search",
+							"value": "Luxury"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/amenities",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Residential\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/amenities"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/categories",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"pg-girls\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/categories"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/amenities?page=1&limit=5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/amenities?page=1&limit=5",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"amenities"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/categories?page=1&limit=5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/categories?page=1&limit=5",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"categories"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/rentals/request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJkNzQxYjFjLTk0YzctNGIwOS1iYjVkLWFmZjA5OTNmZmYwMyIsImlhdCI6MTczMzEzMDY0MCwiZXhwIjoxOTA1OTMwNjQwfQ.8KWvTRoeENReBAXN54s1MS_s8smgkTOGcHoaCdd1VBU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"property_id\": \"12ca3628-41a2-4b60-9223-5f0744144714\",\n  \"message\": \"i need this property can you reduce the price a bit\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/rentals/request"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/api/rentals/request Copy",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJkNzQxYjFjLTk0YzctNGIwOS1iYjVkLWFmZjA5OTNmZmYwMyIsImlhdCI6MTczMzIwNDg0MywiZXhwIjoxOTA2MDA0ODQzfQ.C17NPfEJRMxWh98gZv2XdtLCUgciPVAwKphbx7b76zs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"rejected\" // or \"rejected\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/rentals/request/e4ed2206-cbad-450e-bb0a-6999fb06253d"
+			},
+			"response": []
+		}
+	]
+}

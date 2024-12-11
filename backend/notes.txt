@@ -1336,14 +1336,3 @@ Questions with explainations
 
 
 =================================
-env for ref 
-    secretKey = nodeJsTrainingProjectSecretKey # --> this key is used to create jwt token and verify token
-    SENDER_EMAIL = geetapanwar521@gmail.com # --> this id is used to generate otp emails for email verification
-    SENDER_EMAIL_PASS = btce fesa fbkx rahm # --> this is app password for the email id this is created with the google accound -> app password
-    # MAILER_SEND = mlsn.78232983c5185a9da0cecd1e4ae37cc0a7fcc9cd68dcb99e42d4a4e836b1e9ad 
-    # mlsn.78232983c5185a9da0cecd1e4ae37cc0a7fcc9cd68dcb99e42d4a4e836b1e9ad
-    # nodetrainingotpverifyuser
-    # MAILER_SEND_SERVER = smtp.mailersend.net
-    # MAILER_SEND_PORT = 587
-    # MAILER_SEND_USERNAME = MS_6vYBG0@trial-351ndgweprngzqx8.mlsender.net
-    # MAILER_SEND_PASSWORD = tY7McCOOby4FW7iC

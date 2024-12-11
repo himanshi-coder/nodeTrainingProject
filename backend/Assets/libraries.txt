@@ -1,0 +1,81 @@
+related to design -> 
+
+"@gorhom/animated-tabbar": "2.1.1", --> https://www.npmjs.com/package/@gorhom/animated-tabbar
+"@gorhom/bottom-sheet": "^4", --> https://www.npmjs.com/package/@gorhom/bottom-sheet
+"@react-native-community/slider": "^4.4.2",
+"@shopify/flash-list": "^1.4.0", --> really nice scroll, instead of using flatlist we can use flash-list to render scroll list --> https://shopify.github.io/flash-list/
+"moti": "^0.20.0", --> nice library -> it is to animate the components in react native instead the reanimated we can use this --> https://moti.fyi/
+react-native-pulse --> animations
+react-hook-form --> https://www.npmjs.com/package/react-hook-form --> https://codesandbox.io/p/sandbox/react-hook-form-v7-controller-5h1q5?file=%2Fsrc%2Findex.js
+
+@expensify/react-native-live-markdown --> https://www.npmjs.com/package/@expensify/react-native-live-markdown/v/0.1.157
+@lottiefiles/dotlottie-react --> https://www.npmjs.com/package/@lottiefiles/dotlottie-react
+react-native-timeline-flatlist --> https://www.npmjs.com/package/react-native-timeline-flatlist
+react-native-flash-message --> https://www.npmjs.com/package/react-native-flash-message 
+"react-native-app-intro-slider": "^4.0.4",
+react-native-walkthrough-tooltip
+"react-native-bouncy-checkbox": "^3.0.2",
+"react-native-checkbox-reanimated": "^0.1.0",
+"react-native-material-menu": "^2.0.0", --> dropdown menu nice and simple 
+@react-native-menu/menu : https://www.npmjs.com/package/@react-native-menu/menu --> nice menu 
+"react-native-modal": "^13.0.1", --> modal box 
+react-native-dialog: --> dialog with more features 
+"react-native-popover-view": "^4.1.0", --> to show the tooltip over the component --> https://www.npmjs.com/package/react-native-popover-view
+"react-native-responsive-fontsize": "^0.5.1", --> as the name suggests it is responsive font size
+react-native-responsive-screen
+
+react-native-typing-animation --> https://www.npmjs.com/package/react-native-typing-animation
+"react-native-toast-message": "^2.1.5", --> to show the toast message --> https://www.npmjs.com/package/react-native-toast-message
+react-native-root-toast
+"react-native-snap-carousel": "^4.0.0-beta.6", --> https://www.npmjs.com/package/react-native-snap-carousel
+react-native-swiper --> carousel like 
+"react-timer-hook": "^3.0.5", --> to implement timer in the project like stopwatch, timer etc
+react-native-pager-view -->  https://www.npmjs.com/package/react-native-pager-view
+@ptomasroos/react-native-multi-slider --> https://www.npmjs.com/package/@ptomasroos/react-native-multi-slider
+react-native-awesome-slider --> nice slider --> https://www.npmjs.com/package/react-native-awesome-slider
+@react-native-picker/picker --> dropdown select and picker 
+react-native-picker-select
+rn-sliding-up-panel --> https://www.npmjs.com/package/rn-sliding-up-panel --> nice animation
+react-native-loader-kit --> there is different loaders we can use them in our projects --> https://www.npmjs.com/package/react-native-loader-kit
+react-native-shimmer-placeholder --> skeletons
+react-content-loader --> https://www.npmjs.com/package/react-content-loader
+@react-native-community/blur --> to make the things blur --> https://www.npmjs.com/package/@react-native-community/blur
+react-native-draggable-flatlist --> https://www.npmjs.com/package/react-native-draggable-flatlist
+react-beautiful-dnd --> drag and drop --> https://www.npmjs.com/package/react-beautiful-dnd
+react-native-swipeable-item --> https://www.npmjs.com/package/react-native-swipeable-item
+react-native-in-app-review --> google play review in the app --> https://www.npmjs.com/package/react-native-in-app-review
+react-native-youtube-iframe --> https://www.npmjs.com/package/react-native-youtube-iframe
+react-native-image-progress --> https://www.npmjs.com/package/react-native-image-progress
+@flyerhq/react-native-link-preview --> link preview
+react-native-hyperlink --> 
+@react-navigation/material-top-tabs --> https://reactnavigation.org/docs/material-top-tab-navigator/
+@rnmapbox/maps --> https://www.npmjs.com/package/@rnmapbox/maps
+onfido-sdk-ui
+react-collapse --> https://www.npmjs.com/package/react-collapse
+react-native-collapsible --> https://www.npmjs.com/package/react-native-collapsible
+
+awesome-phonenumber --> https://www.npmjs.com/package/awesome-phonenumber
+@sayem314/react-native-keep-awake --> to make the phone screen awake 
+"react-native-sound": "^0.11.2", --> to play sound or music
+"react-native-inappbrowser-reborn": "^3.7.0", --> to open the browser inside the app 
+"react-native-share": "^7.9.0", -> to share something 
+"react-native-file-access": "^2.5.0", --> to read the system file 
+"@react-native-clipboard/clipboard": "^1.11.1", --> copy to clipboard like functionality and to interact with the clipboard
+"@react-native-community/hooks": "^2.8.1", --> more advance hooks to do useful work -> https://github.com/react-native-community/hooks
+"zustand": "^4.1.3" --> state management library
+@react-native-community/voice --> voice related like record etc
+react-native-audio-recorder-player --> https://www.npmjs.com/package/react-native-audio-recorder-player
+@formatjs/intl-datetimeformat --> 
+fast-equals --> compares two objects deep or shallow 
+focus-trap-react
+howler --> audio library 
+react-native-app-logs --> logs beautifier
+react-native-google-places-autocomplete --> https://www.npmjs.com/package/react-native-google-places-autocomplete
+react-native-key-command
+
+
+
+
+
+
+

@@ -1333,6 +1333,4 @@ Questions with explainations
     :::::::::::
     3.3 What are query parameters, and how can you handle them in a Node.js HTTP server?
         
-
-
 =================================

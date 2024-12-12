@@ -2,6 +2,7 @@ related to design ->
 
 "@gorhom/animated-tabbar": "2.1.1", --> https://www.npmjs.com/package/@gorhom/animated-tabbar
 "@gorhom/bottom-sheet": "^4", --> https://www.npmjs.com/package/@gorhom/bottom-sheet
+react-native-actions-sheet --> action sheet --> https://www.npmjs.com/package/react-native-actions-sheet
 "@react-native-community/slider": "^4.4.2",
 "@shopify/flash-list": "^1.4.0", --> really nice scroll, instead of using flatlist we can use flash-list to render scroll list --> https://shopify.github.io/flash-list/
 "moti": "^0.20.0", --> nice library -> it is to animate the components in react native instead the reanimated we can use this --> https://moti.fyi/
@@ -42,6 +43,7 @@ react-content-loader --> https://www.npmjs.com/package/react-content-loader
 @react-native-community/blur --> to make the things blur --> https://www.npmjs.com/package/@react-native-community/blur
 react-native-draggable-flatlist --> https://www.npmjs.com/package/react-native-draggable-flatlist
 react-beautiful-dnd --> drag and drop --> https://www.npmjs.com/package/react-beautiful-dnd
+react-native-draggable-grid --> https://www.npmjs.com/package/react-native-draggable-grid
 react-native-swipeable-item --> https://www.npmjs.com/package/react-native-swipeable-item
 react-native-in-app-review --> google play review in the app --> https://www.npmjs.com/package/react-native-in-app-review
 react-native-youtube-iframe --> https://www.npmjs.com/package/react-native-youtube-iframe
@@ -50,14 +52,29 @@ react-native-image-progress --> https://www.npmjs.com/package/react-native-image
 react-native-hyperlink --> 
 @react-navigation/material-top-tabs --> https://reactnavigation.org/docs/material-top-tab-navigator/
 @rnmapbox/maps --> https://www.npmjs.com/package/@rnmapbox/maps
+supercluster --> so many markers at one place on map
 onfido-sdk-ui
 react-collapse --> https://www.npmjs.com/package/react-collapse
 react-native-collapsible --> https://www.npmjs.com/package/react-native-collapsible
+react-native-picker-select --> https://www.npmjs.com/package/react-native-picker-select
+react-native-view-shot --> take screenshot
+react-native-table-component --> to create table like structure 
+react-native-masked-text --> https://www.npmjs.com/package/react-native-masked-text
+react-native-blurhash --> https://www.npmjs.com/package/react-native-blurhash
+react-native-context-menu-view --> https://www.npmjs.com/package/react-native-context-menu-view
+react-native-reanimated-zoom --> to zoom something 
+react-native-animateable-text
 
+
+
+
+react-native-shake --> phone shake event detector 
+react-webcam 
 awesome-phonenumber --> https://www.npmjs.com/package/awesome-phonenumber
 @sayem314/react-native-keep-awake --> to make the phone screen awake 
 "react-native-sound": "^0.11.2", --> to play sound or music
 "react-native-inappbrowser-reborn": "^3.7.0", --> to open the browser inside the app 
+sp-react-native-in-app-updates --> https://www.npmjs.com/package/sp-react-native-in-app-updates
 "react-native-share": "^7.9.0", -> to share something 
 "react-native-file-access": "^2.5.0", --> to read the system file 
 "@react-native-clipboard/clipboard": "^1.11.1", --> copy to clipboard like functionality and to interact with the clipboard
@@ -72,10 +89,8 @@ howler --> audio library
 react-native-app-logs --> logs beautifier
 react-native-google-places-autocomplete --> https://www.npmjs.com/package/react-native-google-places-autocomplete
 react-native-key-command
-
-
-
-
-
-
+react-native-keyboard-controller --> https://www.npmjs.com/package/react-native-keyboard-controller
+@react-native-admob/admob --> google ads 
+react-native-swipe-gestures --> to do something on swipe gestures 
+autosuggest-highlight
 
